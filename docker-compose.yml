@@ -1,0 +1,58 @@
+# services:
+#   postgres:
+#     image: postgres:15
+#     container_name: nestjs_postgres
+#     restart: always
+#     environment:
+#       POSTGRES_USER: user
+#       POSTGRES_PASSWORD: password
+#       POSTGRES_DB: homework
+#     ports:
+#       - "5432:5432"
+#     volumes:
+#       - pgdata:/var/lib/postgresql/data
+
+#   app:
+#     build: .
+#     container_name: nestjs_app
+#     restart: always
+#     depends_on:
+#       - postgres
+#     ports:
+#       - "3001:3001"
+#     environment:
+#       - DATABASE_URL: "postgres://user:password@postgres:5432/homework"
+#     command: ["npm", "run", "start:migrate:prod"]
+
+# volumes:
+#   pgdata:
+  
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: nestjs_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: homework
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  app:
+    build: .
+    container_name: nestjs_app
+    restart: always
+    depends_on:
+      - postgres
+    ports:
+      - "3001:3001"
+    environment:
+      DATABASE_URL: "postgres://user:password@postgres:5432/homework"
+    command: ["npm", "run", "start:migrate:prod"]
+
+volumes:
+  pgdata:
